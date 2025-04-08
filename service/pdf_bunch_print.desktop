@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Service
+MimeType=application/pdf;
+Actions=printBunch
+[Desktop Action printBunch]
+Name=Print PDF
+Name[ru]=Печать PDF
+Icon=stock_print
+Exec=/home/oleg/dev/pdf_butch_print/build/Desktop-Debug/pdf_butch_print %F
