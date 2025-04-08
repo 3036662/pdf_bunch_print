@@ -10,12 +10,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets PrintSupport)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets PrintSupport)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets PrintSupport Concurrent)
+
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
-        mainwindow.hpp
+        main_window.cpp
+        main_window.hpp
         printer_launcher.cpp
         printer_launcher.hpp
 )
@@ -25,7 +26,7 @@ qt_add_executable(pdf_butch_print MANUAL_FINALIZATION
 resources/resources.qrc)
 
 target_link_libraries(pdf_butch_print PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(pdf_butch_print PRIVATE Qt6::PrintSupport)
+target_link_libraries(pdf_butch_print PRIVATE Qt6::PrintSupport Qt6::Concurrent Qt6::Gui)
 
 
 if (NOT DEFINED TRANSLATION_DIR)

@@ -18,42 +18,51 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #ifndef PRINTER_LAUNCHER_HPP
 #define PRINTER_LAUNCHER_HPP
 
+#include <QFutureWatcher>
 #include <QObject>
 #include <QPrinter>
 #include <QString>
 
-#include "mainwindow.hpp"
+#include "main_window.hpp"
 
 namespace core {
 
 constexpr const char *const kKeyO = "-o";
 
 class PrinterLauncher : public QObject {
+  using ListPrinterInfos = QList<QPrinterInfo>;
+
   Q_OBJECT
 
  public:
   explicit PrinterLauncher(QObject *parent = nullptr);
 
-  /*!
-   * \brief Launch a native print dialog,print with cups
-   * \param src_file - pdf file to print
-   * \param page_count - total pages in file
-   * \param landscape - true if orientation is landscape
+  /**
+   * @brief Launch a native print dialog,print with cups
+   * @param src_file - pdf file to print
+   * @param page_count - total pages in file
+   * @param landscape - true if orientation is landscape
    */
-  Q_INVOKABLE void print(const QStringList &src_files, int page_count,
-                         bool landscape);
+  Q_INVOKABLE void launch(const QStringList &src_files);
 
  signals:
+
+ public slots:
+  void performPrint(const QString &printer_name);
+
+ private slots:
+  void printersLookupFinished();
 
  private:
   /// @details: https://www.cups.org/doc/options.html
   /// @details: man lp-cups
-  static QStringList createPrintCommand(const QPrinter &printer,
-                                        const QStringList &files);
+  QStringList createPrintCommand(const QString &printer_name);
 
   const QString cups_executable_ = "lp-cups";
 
   std::unique_ptr<MainWindow> m_window_;
+  std::unique_ptr<QFutureWatcher<ListPrinterInfos>> watcher_;
+  QStringList src_files_;
 };
 
 }  // namespace core
