@@ -1,2 +1,2 @@
-spec: .gear/pdf_bunch_print.spec
+spec: .gear/pdf-bunch-print.spec
 tar: . name=@name@-@version@

@@ -1,4 +1,4 @@
-Name: pdf_bunch_print
+Name: pdf-bunch-print
 Version: 0.1
 Release: alt1
 License: GPL-3.0-or-later
@@ -30,7 +30,7 @@ Service menu for the KDE framework to print a bunch of PDF files with a mouse ri
 %cmake_install
 
 %files
-%_bindir/pdf_butch_print
+%_bindir/pdf_bunch_print
 %_datadir/kio/servicemenus/pdf_bunch_print.desktop
 
 

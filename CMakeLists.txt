@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(pdf_butch_print VERSION 0.1 LANGUAGES CXX)
+project(pdf_bunch_print VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -21,12 +21,12 @@ set(PROJECT_SOURCES
         printer_launcher.hpp
 )
 
-qt_add_executable(pdf_butch_print MANUAL_FINALIZATION
+qt_add_executable(pdf_bunch_print MANUAL_FINALIZATION
   ${PROJECT_SOURCES}
 resources/resources.qrc)
 
-target_link_libraries(pdf_butch_print PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(pdf_butch_print PRIVATE Qt6::PrintSupport Qt6::Concurrent Qt6::Gui)
+target_link_libraries(pdf_bunch_print PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(pdf_bunch_print PRIVATE Qt6::PrintSupport Qt6::Concurrent Qt6::Gui)
 
 
 if (NOT DEFINED TRANSLATION_DIR)
@@ -52,12 +52,12 @@ if (NOT DEFINED CMAKE_INSTALL_PREFIX)
 endif()
 
 include(GNUInstallDirs)
-install(TARGETS pdf_butch_print
+install(TARGETS pdf_bunch_print
     RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
 )
 
 
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(pdf_butch_print)
+    qt_finalize_executable(pdf_bunch_print)
 endif()
