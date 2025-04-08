@@ -6,4 +6,4 @@ Actions=printBunch
 Name=Print PDF
 Name[ru]=Печать PDF
 Icon=stock_print
-Exec=/home/oleg/dev/pdf_butch_print/build/Desktop-Debug/pdf_butch_print %F
+Exec=/usr/bin/pdf_butch_print %F

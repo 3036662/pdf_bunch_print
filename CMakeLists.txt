@@ -43,11 +43,17 @@ add_custom_target(update_translations ALL
     BYPRODUCTS ${CMAKE_SOURCE_DIR}/resources/translations/ru_RU.qm
 )
 
+install (FILES ${CMAKE_SOURCE_DIR}/service/pdf_bunch_print.desktop
+  DESTINATION  /usr/share/kio/servicemenus PERMISSIONS  WORLD_READ WORLD_EXECUTE
+)
+
+if (NOT DEFINED CMAKE_INSTALL_PREFIX)
+  set(CMAKE_INSTALL_PREFIX /usr)
+endif()
+
 include(GNUInstallDirs)
 install(TARGETS pdf_butch_print
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
 )
 
 
