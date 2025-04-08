@@ -11,7 +11,7 @@ Group: Office
 
 BuildRequires: gcc-c++ cmake ninja-build
 
-BuildRequires:  qt6-base-devel rpm-macros-qt6
+BuildRequires:  qt6-base-devel rpm-macros-qt6 qt6-tools
 
 Requires: libqt6-printsupport libqt6-gui libqt6-widgets libqt6-core libqt6-concurrent
 Requires: qt6-wayland qt6-translations kf6-kio-common
@@ -32,4 +32,9 @@ Service menu for the KDE framework to print a bunch of PDF files with a mouse ri
 %files
 %_bindir/pdf_butch_print
 %_datadir/kio/servicemenus/pdf_bunch_print.desktop
+
+
+%changelog
+* Tue Apr 08 2025 Oleg Proskurin <proskur@altlinux.org> 0.1-alt1
+- Initial build
 
