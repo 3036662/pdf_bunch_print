@@ -15,6 +15,6 @@ class MainWindow : public QMainWindow {
   void setText(const QString& text);
 
  private:
-  QTextEdit* text_edit_;
+  // QTextEdit* text_edit_;
 };
 #endif  // MAINWINDOW_HPP

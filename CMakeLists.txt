@@ -20,44 +20,26 @@ set(PROJECT_SOURCES
         printer_launcher.hpp
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(pdf_butch_print
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET pdf_butch_print APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(pdf_butch_print SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(pdf_butch_print
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
+qt_add_executable(pdf_butch_print MANUAL_FINALIZATION
+  ${PROJECT_SOURCES}
+resources/resources.qrc)
 
 target_link_libraries(pdf_butch_print PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(pdf_butch_print PRIVATE Qt6::PrintSupport)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.pdf_butch_print)
+
+if (NOT DEFINED TRANSLATION_DIR)
+    set(TRANSLATION_DIR ${CMAKE_BINARY_DIR}/src/)
 endif()
-set_target_properties(pdf_butch_print PROPERTIES
-    ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+message(TRANSLATION_DIR=${TRANSLATION_DIR})
+
+
+add_custom_target(update_translations ALL
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMAND /usr/bin/lupdate-qt6 -recursive -locations relative . -ts resources/translations/ru_RU.ts
+    COMMAND /usr/bin/lrelease-qt6 resources/translations/ru_RU.ts
+    COMMENT "Update and compile translations"
+    BYPRODUCTS ${CMAKE_SOURCE_DIR}/resources/translations/ru_RU.qm
 )
 
 include(GNUInstallDirs)
