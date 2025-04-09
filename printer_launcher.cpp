@@ -103,7 +103,6 @@ void PrinterLauncher::performPrint(const QString &printer_name) {
             process_->deleteLater();
             process_ = nullptr;
             m_window_->close();
-            q
           });
 
   process_->start(cups_executable_, options);
