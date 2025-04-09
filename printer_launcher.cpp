@@ -70,31 +70,43 @@ void PrinterLauncher::printersLookupFinished() {
 }
 
 void PrinterLauncher::performPrint(const QString &printer_name) {
-  if (printer_name.isEmpty()) {
+  if (printer_name.isEmpty() || src_files_.empty()) {
+    return;
+  }
+  if (counter_ > 1000) {
+    qWarning() << "The 1000 files max limit is reached.";
     return;
   }
   auto options = createPrintCommand(printer_name);
-  auto *process = new QProcess();
-  process->setProcessChannelMode(QProcess::ForwardedChannels);
+  process_ = new QProcess();
+  process_->setProcessChannelMode(QProcess::ForwardedChannels);
 
   // finished
-  connect(process, &QProcess::finished, [process, this] {
-    process->deleteLater();
-    m_window_->close();
+  connect(process_, &QProcess::finished, [this, printer_name] {
+    process_->deleteLater();
+    process_ = nullptr;
+    if (!src_files_.empty()) {
+      performPrint(printer_name);
+    } else {
+      m_window_->close();
+    }
   });
 
   //  error
-  connect(process, &QProcess::errorOccurred,
-          [process](QProcess::ProcessError err) {
+  connect(process_, &QProcess::errorOccurred,
+          [this](QProcess::ProcessError err) {
             if (err == QProcess::FailedToStart) {
               qWarning() << "Cups executable failed to start:"
-                         << QString(process->readAllStandardError());
+                         << QString(process_->readAllStandardError());
             }
-            process->close();
-            process->deleteLater();
+            process_->close();
+            process_->deleteLater();
+            process_ = nullptr;
+            m_window_->close();
+            q
           });
 
-  process->start(cups_executable_, options);
+  process_->start(cups_executable_, options);
 }
 
 /// @details: https://www.cups.org/doc/options.html
@@ -108,11 +120,14 @@ QStringList PrinterLauncher::createPrintCommand(const QString &printer_name) {
   }
   // job name
   {
-    const QString job_name = "print_pdf_" + printer_name;
+    const QString job_name =
+        "print_pdf_" + printer_name + QString::number(counter_);
+    ++counter_;
     res.append("-t");
     res.append(job_name);
   }
-  res.append(src_files_);
+  res.append(src_files_.first());
+  src_files_.removeFirst();
   return res;
 }
 

@@ -21,6 +21,7 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #include <QFutureWatcher>
 #include <QObject>
 #include <QPrinter>
+#include <QProcess>
 #include <QString>
 
 #include "main_window.hpp"
@@ -63,6 +64,8 @@ class PrinterLauncher : public QObject {
   std::unique_ptr<MainWindow> m_window_;
   std::unique_ptr<QFutureWatcher<ListPrinterInfos>> watcher_;
   QStringList src_files_;
+  uint64_t counter_ = 0;
+  QProcess *process_ = nullptr;
 };
 
 }  // namespace core
