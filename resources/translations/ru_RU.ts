@@ -14,7 +14,7 @@
         <translation>Печать</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Searching for printers</source>
         <translation>Поиск принтеров</translation>
     </message>

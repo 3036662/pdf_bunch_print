@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget* parent)
   connect(button_, &QPushButton::clicked, this,
           &MainWindow::printButtonClicked);
   auto* combo_hlayout = new QHBoxLayout();
+  button_->setEnabled(false);
   combo_hlayout->addWidget(combo_box_, 6);
   combo_hlayout->addWidget(button_, 3);
 
@@ -48,9 +49,13 @@ MainWindow::MainWindow(QWidget* parent)
 void MainWindow::setDefaultPrinter(const QPrinterInfo& printer) {
   combo_box_->addItem(printer.printerName());
   combo_box_->setCurrentText(printer.printerName());
+  button_->setEnabled(true);
 }
 
 void MainWindow::setPrinters(const QList<QPrinterInfo>& printers) {
+  if (!printers.empty()) {
+    button_->setEnabled(true);
+  }
   int default_index_printer = -1;
   int curr_index = 0;
   std::for_each(
