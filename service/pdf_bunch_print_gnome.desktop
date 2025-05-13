@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Icon=printer-symbolic
+NoDisplay=True
+OnlyShowIn=GNOME;
+Name=Print PDF
+Name[ru]=Печать PDF
+MimeType=application/pdf;
+Exec=/usr/bin/pdf_bunch_print  %F

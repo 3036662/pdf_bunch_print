@@ -47,6 +47,10 @@ install (FILES ${CMAKE_SOURCE_DIR}/service/pdf_bunch_print.desktop
   DESTINATION  /usr/share/kio/servicemenus PERMISSIONS  WORLD_READ WORLD_EXECUTE
 )
 
+install (FILES ${CMAKE_SOURCE_DIR}/service/pdf_bunch_print_gnome.desktop
+  DESTINATION  /usr/share/applications PERMISSIONS  WORLD_READ WORLD_EXECUTE
+)
+
 if (NOT DEFINED CMAKE_INSTALL_PREFIX)
   set(CMAKE_INSTALL_PREFIX /usr)
 endif()
