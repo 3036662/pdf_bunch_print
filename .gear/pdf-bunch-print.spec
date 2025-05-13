@@ -36,8 +36,8 @@ Service menu for the KDE framework to print a bunch of PDF files with a mouse ri
 
 
 %changelog
-* Tue May 12 2025 Semen Fomchenkov <armatik@altlinux.org> 0.2-alt1
-- add .desktop file for GNOME
+* Tue May 12 2025 Oleg Proskurin <proskur@altlinux.org> 0.2-alt1
+- add .desktop file for GNOME thanks to Semen Fomchenkov <armatik@altlinux.org>
 
 * Tue Apr 08 2025 Oleg Proskurin <proskur@altlinux.org> 0.1-alt1
 - Initial build
